@@ -5,8 +5,9 @@ import argparse
 
 def create_parser():
     parser = argparse.ArgumentParser('./replace.py', description='Replace or reformat fields in csv files')
-    parser.add_argument('-f', '--find', help='find criteria', required=True)
+    parser.add_argument('-s', '--search', help='search criteria', required=True)
     parser.add_argument('-r', '--replace', help='replace criteria', required=True)
+    parser.add_argument('-f', '--field', help='Field to search/replace in', required=False)
     return parser
 
 
