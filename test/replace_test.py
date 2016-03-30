@@ -17,3 +17,11 @@ class ParserTest(unittest.TestCase):
         replace.replace(parsed)
         self.assertEqual(parsed.input.name, self.sample_csv)
         self.assertEqual(parsed.output.getvalue(), self.file_contents(expected_csv))
+
+    def test_field_replace(self):
+        expected_csv = 'test/fixtures/sample-clean-name.csv'
+        parsed = replace.create_parser().parse_args(['--search', 'NA', '--replace', '', '--field', 'NAME', '--input', self.sample_csv])
+        parsed.output = StringIO()
+        replace.replace(parsed)
+        self.assertEqual(parsed.input.name, self.sample_csv)
+        self.assertEqual(parsed.output.getvalue(), self.file_contents(expected_csv))

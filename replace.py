@@ -18,13 +18,16 @@ def main():
     replace(args)
 
 def replace(args):
-    column_names = list()
+    column_names = {}
     writer = csv.writer(args.output, lineterminator="\n")
     for index, row in enumerate(csv.reader(iter(args.input.readline, ''), delimiter=',')):
         if index == 0:
-            for col in row: column_names.append(col)
+            for col in row: column_names[col] = row.index(col)
         else:
-            row = [cell.replace(args.search, args.replace) for cell in row]
+            if args.field:
+                row[column_names[args.field]] = row[column_names[args.field]].replace(args.search, args.replace)
+            else:
+                row = [cell.replace(args.search, args.replace) for cell in row]
         writer.writerow(row)
         args.output.flush()
 
