@@ -8,6 +8,8 @@ def create_parser():
     parser.add_argument('-s', '--search', help='search criteria', required=True)
     parser.add_argument('-r', '--replace', help='replace criteria', required=True)
     parser.add_argument('-f', '--field', help='Field to search/replace in', required=False)
+    parser.add_argument('-i', '--input', help='Input file', required=True)
+    parser.add_argument('-o', '--output', help='Output file', required=True)
     return parser
 
 
