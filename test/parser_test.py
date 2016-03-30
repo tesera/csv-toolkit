@@ -19,7 +19,6 @@ class ParserTest(unittest.TestCase):
         parsed = self.parser.parse_args(['--search', '""', '--replace', '""', '--field', self.expected])
         self.assertEqual(parsed.field, self.expected)
 
-    def test_input_output(self):
-        parsed = self.parser.parse_args(['--search', '""', '--replace', '""', '--field', '""', '--input', self.expected_file, '--output', self.expected_file])
+    def test_input(self):
+        parsed = self.parser.parse_args(['--search', '""', '--replace', '""', '--field', '""', '--input', self.expected_file])
         self.assertEqual(parsed.input.name, self.expected_file)
-        self.assertEqual(parsed.output.name, self.expected_file)
