@@ -5,7 +5,7 @@ class ParserTest(unittest.TestCase):
     def setUp(self):
         self.parser = replace.create_parser()
         self.expected = 'test'
-        self.expected_file = 'test/fixtures/sample.csv'
+        self.expected_file = 'test/fixtures/sample-dirty.csv'
 
     def test_find(self):
         parsed = self.parser.parse_args(['--search', self.expected, '--replace', '""'])

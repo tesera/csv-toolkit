@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-import sys
 import argparse
+import sys
+import csv
 
 def create_parser():
     parser = argparse.ArgumentParser('./replace.py', description='Replace or reformat fields in csv files')
@@ -17,8 +18,15 @@ def main():
     replace(args)
 
 def replace(args):
-    pass
-
+    column_names = list()
+    writer = csv.writer(args.output, lineterminator="\n")
+    for index, row in enumerate(csv.reader(iter(args.input.readline, ''), delimiter=',')):
+        if index == 0:
+            for col in row: column_names.append(col)
+        else:
+            row = [cell.replace(args.search, args.replace) for cell in row]
+        writer.writerow(row)
+        args.output.flush()
 
 if __name__ == "__main__":
     main()

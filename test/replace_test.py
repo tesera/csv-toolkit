@@ -4,14 +4,16 @@ import replace
 
 class ParserTest(unittest.TestCase):
     def setUp(self):
-        self.sample_csv = 'test/fixtures/sample.csv'
+        self.sample_csv = 'test/fixtures/sample-dirty.csv'
 
-    def sample_file_contents(self):
-        with open(self.sample_csv) as f:
+    def file_contents(self, csv):
+        with open(csv) as f:
             return f.read()
 
-    def test_stdout(self):
+    def test_global_replace(self):
+        expected_csv = 'test/fixtures/sample-clean.csv'
         parsed = replace.create_parser().parse_args(['--search', 'NA', '--replace', '', '--input', self.sample_csv])
         parsed.output = StringIO()
+        replace.replace(parsed)
         self.assertEqual(parsed.input.name, self.sample_csv)
-        self.assertEqual(parsed.output.getvalue(), self.sample_file_contents())
+        self.assertEqual(parsed.output.getvalue(), self.file_contents(expected_csv))
