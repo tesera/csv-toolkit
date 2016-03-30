@@ -12,9 +12,13 @@ def create_parser():
     parser.add_argument('-o', '--output', help='Output file', required=True)
     return parser
 
-
 def main():
     args = create_parser().parse_args(sys.argv[1:])
+    replace(args)
+
+def replace(args):
+    pass
+
 
 if __name__ == "__main__":
     main()
