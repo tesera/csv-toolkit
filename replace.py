@@ -52,9 +52,9 @@ class CaseReplacer():
                 for col in row: column_names[col] = row.index(col)
             else:
                 if args.field:
-                    row[column_names[args.field]] = row[column_names[args.field]].upper()
+                    row[column_names[args.field]] = getattr(row[column_names[args.field]], args.case)()
                 else:
-                    row = [cell.upper() for cell in row]
+                    row = [getattr(cell, args.case)() for cell in row]
             writer.writerow(row)
             args.output.flush()
 
