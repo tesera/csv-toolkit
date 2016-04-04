@@ -41,7 +41,7 @@ class CaseReplacer():
         self.parser.add_argument('-o', '--output', type=argparse.FileType('w'), default=sys.stdout, help='Output file', required=False)
         self.args = self.parser.parse_args(argv)
         if self.args.case not in self.cases:
-            parser.error('case must be one of: {}'.format(', '.join(self.cases)))
+            self.parser.error('case must be one of: {}'.format(', '.join(self.cases)))
 
     def replace(self):
         args = self.args
@@ -54,7 +54,7 @@ class CaseReplacer():
                 if args.field:
                     pass
                 else:
-                    pass
+                    row = [cell.upper() for cell in row]
             writer.writerow(row)
             args.output.flush()
 
