@@ -3,7 +3,7 @@ import unittest
 from StringIO import StringIO
 from replace import CaseReplacer
 
-class ParserTest(unittest.TestCase):
+class CaseParserTest(unittest.TestCase):
     def setUp(self):
         self.expected = 'test'
         self.expected_file = 'test/fixtures/sample-dirty.csv'
@@ -24,13 +24,13 @@ class ParserTest(unittest.TestCase):
         replacer = CaseReplacer(['--case', 'upper', '--field', self.expected, '--input', self.expected_file])
         self.assertEqual(replacer.args.input.name, self.expected_file)
 
-class ReplacerTest(unittest.TestCase):
+class CaseReplacerTest(unittest.TestCase):
     def setUp(self):
         self.sample_csv = 'test/fixtures/sample-dirty.csv'
 
     def file_contents(self, csv):
         with open(csv) as f:
-            return f.read()
+            return f.read().strip()
 
     def test_case_upper_global(self):
         expected_csv = 'test/fixtures/sample-uppercased.csv'
@@ -38,12 +38,12 @@ class ReplacerTest(unittest.TestCase):
         replacer.args.output = StringIO()
         replacer.replace()
         self.assertEqual(replacer.args.input.name, self.sample_csv)
-        self.assertEqual(replacer.args.output.getvalue(), self.file_contents(expected_csv))
+        self.assertEqual(replacer.args.output.getvalue().strip(), self.file_contents(expected_csv))
 
-    # def test_case_upper_with_field(self):
-    #     expected_csv = 'test/fixtures/sample-clean-name.csv'
-    #     replacer = CaseReplacer(['--search', 'NA', '--replace', '', '--field', 'NAME', '--input', self.sample_csv])
-    #     replacer.args.output = StringIO()
-    #     replacer.replace()
-    #     self.assertEqual(replacer.args.input.name, self.sample_csv)
-    #     self.assertEqual(replacer.args.output.getvalue(), self.file_contents(expected_csv))
+    def test_case_upper_with_field(self):
+        expected_csv = 'test/fixtures/sample-uppercased-name.csv'
+        replacer = CaseReplacer(['--case', 'upper', '--field', 'NAME', '--input', self.sample_csv])
+        replacer.args.output = StringIO()
+        replacer.replace()
+        self.assertEqual(replacer.args.input.name, self.sample_csv)
+        self.assertEqual(replacer.args.output.getvalue().strip(), self.file_contents(expected_csv))

@@ -2,7 +2,7 @@ import unittest
 from StringIO import StringIO
 from replace import TextReplacer
 
-class ParserTest(unittest.TestCase):
+class TextParserTest(unittest.TestCase):
     def setUp(self):
         self.expected = 'test'
         self.expected_file = 'test/fixtures/sample-dirty.csv'
@@ -23,13 +23,13 @@ class ParserTest(unittest.TestCase):
         replacer = TextReplacer(['--search', '""', '--replace', '""', '--field', '""', '--input', self.expected_file])
         self.assertEqual(replacer.args.input.name, self.expected_file)
 
-class ReplacerTest(unittest.TestCase):
+class TextReplacerTest(unittest.TestCase):
     def setUp(self):
         self.sample_csv = 'test/fixtures/sample-dirty.csv'
 
     def file_contents(self, csv):
         with open(csv) as f:
-            return f.read()
+            return f.read().strip()
 
     def test_global_replace(self):
         expected_csv = 'test/fixtures/sample-clean.csv'
@@ -37,7 +37,7 @@ class ReplacerTest(unittest.TestCase):
         replacer.args.output = StringIO()
         replacer.replace()
         self.assertEqual(replacer.args.input.name, self.sample_csv)
-        self.assertEqual(replacer.args.output.getvalue(), self.file_contents(expected_csv))
+        self.assertEqual(replacer.args.output.getvalue().strip(), self.file_contents(expected_csv))
 
     def test_field_replace(self):
         expected_csv = 'test/fixtures/sample-clean-name.csv'
@@ -45,4 +45,4 @@ class ReplacerTest(unittest.TestCase):
         replacer.args.output = StringIO()
         replacer.replace()
         self.assertEqual(replacer.args.input.name, self.sample_csv)
-        self.assertEqual(replacer.args.output.getvalue(), self.file_contents(expected_csv))
+        self.assertEqual(replacer.args.output.getvalue().strip(), self.file_contents(expected_csv))
