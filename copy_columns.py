@@ -22,9 +22,9 @@ def main():
             filters = reduce(lambda x,y: x+[y] if not y in x else x, filters,[])
             filters = map(lambda col: row.index(col), filters)
             filters = sorted(filters)
-        else:
-            row = [c for index, c in enumerate(row) if index in filters]
-            writer.writerow(row)
+
+        row = [c for index, c in enumerate(row) if index in filters]
+        writer.writerow(row)
 
 
 if __name__ == "__main__":
