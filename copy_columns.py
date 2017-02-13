@@ -14,8 +14,8 @@ def main():
     args = parser.parse_args()
     filters = None
 
+    writer = csv.writer(args.output, lineterminator="\n")
     for index, row in enumerate(csv.reader(iter(args.input.readline, ''), delimiter=',')):
-        writer = csv.writer(args.output, lineterminator="\n")
         if index == 0:
             filters = list(map(lambda r: filter(re.compile(r).match, row), flatten(args.filters)))
             filters = flatten(filters)
