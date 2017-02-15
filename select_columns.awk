@@ -9,7 +9,11 @@ NR==1 {
             selected[i] = $i
 }
 NR>=1 {
+    k=0
     for(i in selected)
-        printf "%s%s", $i, ","
+    {
+        k++
+        printf "%s%s", $i, (k<length(selected))?FS:""
+    }
     print ""
 }
