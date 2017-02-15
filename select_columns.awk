@@ -4,16 +4,19 @@ BEGIN {
     FS=","
 }
 NR==1 {
+    k=1
     for (i=1; i<=NF; i++)
+    {
         if($i ~ pattern)
-            selected[i] = $i
+        {
+            k++
+            selected[k] = i
+        }
+    }
 }
 NR>=1 {
-    k=0
     for(i in selected)
-    {
-        k++
-        printf "%s%s", $i, (k<length(selected))?FS:""
-    }
+        if(selected[i])
+            printf "%s%s", $selected[i], (i==length(selected))?FS:""
     print ""
 }
