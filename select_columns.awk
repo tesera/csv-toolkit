@@ -2,15 +2,19 @@
 function push(A,B) { A[length(A)+1] = B }
 BEGIN {
     FS=","
+    split(cols,patterns,",")
 }
 NR==1 {
     k=1
     for (i=1; i<=NF; i++)
     {
-        if($i ~ pattern)
+        for(p in patterns)
         {
-            k++
-            selected[k] = i
+            if($i ~ patterns[p] && !(i in selected))
+            {
+                k++
+                selected[k] = i
+            }
         }
     }
 }
