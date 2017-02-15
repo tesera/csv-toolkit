@@ -1,14 +1,15 @@
 #!/usr/bin/awk -f
+function push(A,B) { A[length(A)+1] = B }
 BEGIN {
     FS=","
-    nout=split(cols,out,",")
 }
 NR==1 {
     for (i=1; i<=NF; i++)
-        ix[$i] = i
+        if($i ~ pattern)
+            selected[i] = $i
 }
 NR>=1 {
-    for(i=1; i<=nout; i++)
-        printf "%s%s", $ix[out[i]], (i==nout)?"":FS
+    for(i in selected)
+        printf "%s%s", $i, ","
     print ""
 }
