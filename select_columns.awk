@@ -12,15 +12,15 @@ NR==1 {
         {
             if($i ~ patterns[p] && !(i in selected))
             {
-                k++
                 selected[k] = i
+                k++
             }
         }
     }
 }
 NR>=1 {
-    for(i in selected)
+    for(i=1; i<=length(selected); i++)
         if(selected[i])
-            printf "%s%s", $selected[i], (i==length(selected))?FS:""
+            printf "%s%s", $selected[i], (i<length(selected))?FS:""
     print ""
 }
